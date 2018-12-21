@@ -1,4 +1,5 @@
-#CROWDFUNDER MVP DESCRIBED BY A ROBOT
+# CROWDFUNDER MVP DESCRIBED BY A ROBOT
+
 Crowdfunder has two main routes: shop and post.
 
 Crowdfunder’s MVP search posts, filters posts, create post, create user, log in, log out, like post, follow post, comment post
