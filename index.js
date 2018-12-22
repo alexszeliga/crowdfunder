@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
-const logger = require("morgan");
+// const logger = require("morgan");
 const Data = require("./data/");
 
 const API_PORT = 3001;
@@ -29,7 +29,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(logger("dev"));
+// app.use(logger("dev"));
 
 // this is our get method
 // this method fetches all available data in our database
