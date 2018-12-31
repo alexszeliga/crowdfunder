@@ -3,14 +3,22 @@ import { StyleSheet, css } from "aphrodite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SVG from "./menuBar";
 // import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
-
 const styles = StyleSheet.create({
   nav: {
+    position: "absolute",
+    width: "100vw",
+    color: "rgb(166, 215, 221, 1)",
     fontFamily: "'Raleway', sans-serif;",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    border: "1px solid black"
+    boxShadow: "0px 0px 20px 0px rgba(178, 178, 178, 0.47)",
+    zIndex: "2",
+    backgroundColor: "white",
+    "@media (min-width: 768px)": {
+      backgroundColor: "transparent",
+      color: "rgb(166, 215, 221, .5)"
+    }
   },
   menuWrap: {
     flex: 1,
@@ -21,7 +29,8 @@ const styles = StyleSheet.create({
     listStyleType: "none",
     margin: "0",
     padding: "0",
-    height: "100%"
+    height: "100%",
+    color: "black"
   },
   navMenuItem: {
     display: "inline-block",
@@ -34,6 +43,7 @@ const styles = StyleSheet.create({
   logo: {
     fontFamily: "'Patua One', cursive;",
     fontSize: "2.5rem",
+    letterSpacing: "-.8px",
     flex: 1,
     textAlign: "center"
   },
@@ -43,16 +53,34 @@ const styles = StyleSheet.create({
   },
   faBlock: {
     display: "block",
-    width: "20px"
+    color: "black"
+  },
+  searchInputWrapper: {
+    flex: 1
+  },
+  searchInput: {
+    display: "block",
+    marginLeft: "9px",
+    border: "0px solid black",
+    padding: "5px",
+    backgroundColor: "rgba(255,255,255,0.5)",
+    outline: "none"
   }
 });
 class Nav extends Component {
+  destktopSearch = () => {
+    return (
+      <div className={css(styles.searchInputWrapper)}>
+        <input className={css(styles.searchInput)} />
+      </div>
+    );
+  };
   desktopMenu = () => {
     return (
-      <ul class={css(styles.menu)}>
-        <li class={css(styles.navMenuItem)}>Help Me</li>
-        <li class={css(styles.navMenuItem)}>Sign In</li>
-        <li class={css(styles.navMenuItem, styles.lastNavMenuItem)}>
+      <ul className={css(styles.menu)}>
+        <li className={css(styles.navMenuItem)}>Help Me</li>
+        <li className={css(styles.navMenuItem)}>Sign In</li>
+        <li className={css(styles.navMenuItem, styles.lastNavMenuItem)}>
           Get Funds
         </li>
       </ul>
@@ -60,21 +88,29 @@ class Nav extends Component {
   };
   render() {
     return (
-      <nav class={css(styles.nav)}>
-        <div class={css(styles.searchButton)}>
-          <FontAwesomeIcon class={css(styles.faBlock)} size="" icon="search" />
-        </div>
-        <div class={css(styles.logo)}>crowdfunder</div>
-        <div class={css(styles.menuWrap)}>
+      <nav className={css(styles.nav)}>
+        {this.props.clientWidth > 767 ? (
+          this.destktopSearch()
+        ) : (
+          <div className={css(styles.searchButton)}>
+            <FontAwesomeIcon
+              className={css(styles.faBlock)}
+              size="lg"
+              icon="search"
+            />
+          </div>
+        )}
+
+        <div className={css(styles.logo)}>crowdfunder</div>
+        <div className={css(styles.menuWrap)}>
           {this.props.clientWidth > 767 ? (
             this.desktopMenu()
           ) : (
-            <SVG style={styles.burger} width="24" />
+            <SVG style={styles.burger} width="21" />
           )}
         </div>
       </nav>
     );
   }
 }
-
 export default Nav;

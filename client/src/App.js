@@ -2,22 +2,32 @@
 import React, { Component } from "react";
 // import axios from "axios";
 import Nav from "./components/nav";
+import Hero from "./components/body/hero";
+import ThreeUp from "./components/body/threeUp";
+import DbTest from "./components/dbTest/dbTest";
 import { library } from "@fortawesome/fontawesome-svg-core";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faSchool,
+  faQuidditch,
+  faFlask
+} from "@fortawesome/free-solid-svg-icons";
+import { StyleSheet, css } from "aphrodite";
 
 library.add(faSearch);
+library.add(faSchool);
+library.add(faQuidditch);
+library.add(faFlask);
 
+const styles = StyleSheet.create({
+  body: {
+    overflowX: "hidden"
+  }
+});
 class App extends Component {
   // initialize our state
   state = {
-    data: [],
-    id: 0,
-    message: null,
-    intervalIsSet: false,
-    idToDelete: null,
-    idToUpdate: null,
-    objectToUpdate: null,
     clientWidth: 0
   };
 
@@ -112,8 +122,11 @@ class App extends Component {
   // see them render into our screen
   render() {
     return (
-      <div>
+      <div className={css(styles.body)}>
         <Nav clientWidth={this.state.clientWidth} />
+        <Hero clientWidth={this.state.clientWidth} />
+        <ThreeUp clientWidth={this.state.clientWidth} />
+        <DbTest />
       </div>
     );
   }
