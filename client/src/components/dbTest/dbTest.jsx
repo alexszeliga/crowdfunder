@@ -9,7 +9,7 @@ class DbTest extends Component {
     this.handleClick = e => {
       e.preventDefault();
       axios
-        .post("/api/user-new", { username: "alex", password: "password" })
+        .get("/api/user", { username: "alex", password: "password" })
         .then(function(res) {
           console.log(res);
         })
