@@ -1,6 +1,14 @@
 const db = require("../models");
 
 module.exports = function(app) {
+  app.get("/api/all-users", function(req, res) {
+    db.User.find(function(err, allUsers) {
+      allUsers.filter(user => {
+        user.password = undefined;
+      });
+      res.json(allUsers);
+    });
+  });
   app.post("/api/user", function(req, res) {
     db.User.create(req.body).then(function(userAddResponse) {
       res.json(userAddResponse);

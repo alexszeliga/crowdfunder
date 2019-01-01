@@ -5,7 +5,10 @@ class DbTest extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      usernameInput: "",
+      passwordInput: ""
+    };
     this.handleClickLogIn = e => {
       e.preventDefault();
       axios
@@ -34,14 +37,33 @@ class DbTest extends Component {
           console.log(error);
         });
     };
+    this.handleInputChange = e => {
+      const { name, value } = e.target;
+      this.setState({
+        [name]: value
+      });
+    };
+  }
+  componentDidMount() {
+    axios.get("/api/all-users").then(function(response) {
+      console.log(response);
+    });
   }
   render() {
     return (
       <form>
-        <input />
-        <label>username</label>
-        <input />
-        <label>password</label>
+        <input
+          name="usernameInput"
+          onChange={this.handleInputChange}
+          value={this.state.usernameInput}
+        />
+        <label>username {this.state.usernameInput}</label>
+        <input
+          name="passwordInput"
+          onChange={this.handleInputChange}
+          value={this.state.passwordInput}
+        />
+        <label>password {this.state.passwordInput}</label>
         <button onClick={this.handleClickLogIn}>Log In</button>
         <button onClick={this.handleClickNewUser}>New User</button>
       </form>
