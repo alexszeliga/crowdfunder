@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StyleSheet, css } from "aphrodite";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+// import { fas } from "@fortawesome/free-solid-svg-icons";
 
 const styles = StyleSheet.create({
   faBlock: {},

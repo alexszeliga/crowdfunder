@@ -20,10 +20,7 @@ const SVG = props => (
     <g id="surface1">
       <path d="M 4 4 L 4 8 L 32 8 L 32 4 Z M 4 14 L 4 18 L 32 18 L 32 14 Z M 4 24 L 4 28 L 32 28 L 32 24 Z " />
     </g>
-    {console.log(props.style)}
   </svg>
 );
 
 export default SVG;
-
-//{ width = "", className = this.style, viewBox = "0 0 32 32" }

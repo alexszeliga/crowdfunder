@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class DbTest extends Component {
   constructor(props) {
@@ -7,6 +8,14 @@ class DbTest extends Component {
     this.state = {};
     this.handleClick = e => {
       e.preventDefault();
+      axios
+        .post("/api/user-new", { username: "alex", password: "password" })
+        .then(function(res) {
+          console.log(res);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     };
   }
   render() {
