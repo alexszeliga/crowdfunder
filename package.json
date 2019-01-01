@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/alexszeliga/crowdfunder#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
     "dotenv": "^6.2.0",
