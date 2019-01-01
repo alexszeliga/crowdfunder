@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import Nav from "./components/nav";
 import Hero from "./components/body/hero";
 import ThreeUp from "./components/body/threeUp";
-import DbTest from "./components/dbTest/dbTest";
+import FormTest from "./components/formTest/formTest";
 import { library } from "@fortawesome/fontawesome-svg-core";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -126,7 +126,7 @@ class App extends Component {
         <Nav clientWidth={this.state.clientWidth} />
         <Hero clientWidth={this.state.clientWidth} />
         <ThreeUp clientWidth={this.state.clientWidth} />
-        <DbTest />
+        <FormTest />
       </div>
     );
   }

@@ -20,6 +20,7 @@ Crowdfunder’s MVP search posts, filters posts, create post, create user, log i
 - User has one location
 - User has many posts
 - User has many comments
+- User has many blogs
 
 ## user interaction meta
 
@@ -35,6 +36,8 @@ Crowdfunder’s MVP search posts, filters posts, create post, create user, log i
 * Blogs have one title
 * Blogs have one summary
 * Blogs have one body
+* Blogs have one creator
+* Blogs have many comments
 
 Shop route shows grid of ‘featured’ items (most likes and follows in the last few days)
 
