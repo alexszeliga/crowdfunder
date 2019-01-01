@@ -6,12 +6,25 @@ class DbTest extends Component {
     super(props);
 
     this.state = {};
-    this.handleClick = e => {
+    this.handleClickLogIn = e => {
       e.preventDefault();
       axios
-        // .post("/api/user", { username: "hashalex22", password: "password" })
         .post("/api/user-login", {
-          username: "hashalex22",
+          username: "hashalexRealTest",
+          password: "password"
+        })
+        .then(function(res) {
+          console.log(res);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    };
+    this.handleClickNewUser = e => {
+      e.preventDefault();
+      axios
+        .post("/api/user", {
+          username: "hashalexRealTest",
           password: "password"
         })
         .then(function(res) {
@@ -29,7 +42,8 @@ class DbTest extends Component {
         <label>username</label>
         <input />
         <label>password</label>
-        <button onClick={this.handleClick}>Submit</button>
+        <button onClick={this.handleClickLogIn}>Log In</button>
+        <button onClick={this.handleClickNewUser}>New User</button>
       </form>
     );
   }

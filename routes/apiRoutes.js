@@ -8,10 +8,15 @@ module.exports = function(app) {
   });
   app.post("/api/user-login", function(req, res) {
     db.User.findOne({ username: req.body.username }, function(err, userFromDb) {
-      if (userFromDb.validPassword(req.body.password)) {
-        res.json(userFromDb.username);
+      if (userFromDb !== null) {
+        if (userFromDb.validPassword(req.body.password)) {
+          res.json(userFromDb.username);
+        } else {
+          res.send("Incorrect Password");
+        }
       } else {
-        res.send("You didn't get the password correct");
+        // user not found
+        res.send("User not found");
       }
     });
   });
