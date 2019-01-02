@@ -1,4 +1,5 @@
 const db = require("../models");
+const path = require("path");
 
 module.exports = function(app) {
   app.get("/api/all-users", function(req, res) {
@@ -10,9 +11,13 @@ module.exports = function(app) {
     });
   });
   app.post("/api/user", function(req, res) {
-    db.User.create(req.body).then(function(userAddResponse) {
-      res.json(userAddResponse);
-    });
+    db.User.create(req.body)
+      .then(function(userAddResponse) {
+        res.json(userAddResponse);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
   });
   app.post("/api/user-login", function(req, res) {
     db.User.findOne({ username: req.body.username }, function(err, userFromDb) {
@@ -27,5 +32,8 @@ module.exports = function(app) {
         res.send("User not found");
       }
     });
+  });
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });
 };
