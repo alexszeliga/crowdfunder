@@ -6,6 +6,7 @@ import Hero from "./components/body/hero";
 import ThreeUp from "./components/body/threeUp";
 import FormTest from "./components/formTest/formTest";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import axios from "axios";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -28,105 +29,80 @@ const styles = StyleSheet.create({
 class App extends Component {
   // initialize our state
   state = {
-    clientWidth: 0
+    clientWidth: window.innerWidth,
+    loggedIn: false,
+    username: "null",
+    usernameSignInInput: "",
+    passwordSignInInput: "",
+    usernameNewUserInput: "",
+    passwordNewUserInput: "",
+    emailNewUserInput: "",
+    locationNewUserInput: ""
   };
 
   updateDimension = () => {
     this.setState({ clientWidth: window.innerWidth });
   };
 
-  // when component mounts, first thing it does is fetch all existing data in our db
-
-  // then we incorporate a polling logic so that we can easily see if our db has
-  // changed and implement those changes into our UI
   componentDidMount() {
     window.addEventListener("resize", this.updateDimension);
-    this.updateDimension();
-    // this.getDataFromDb();
-    // if (!this.state.intervalIsSet) {
-    //   let interval = setInterval(this.getDataFromDb, 10000);
-    //   this.setState({ intervalIsSet: interval });
-    // }
+    this.getLoggedInUser();
   }
 
-  // never let a process live forever
-  // always kill a process everytime we are done using it
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimension);
-    // if (this.state.intervalIsSet) {
-    //   clearInterval(this.state.intervalIsSet);
-    //   this.setState({ intervalIsSet: null });
-    // }
   }
-
-  // just a note, here, in the front end, we use the id key of our data object
-  // in order to identify which we want to Update or delete.
-  // for our back end, we use the object id assigned by MongoDB to modify
-  // data base entries
-
-  // our first get method that uses our backend api to
-  // fetch data from our data base
-  getDataFromDb = () => {
-    // fetch("/api/getData")
-    //   .then(data => data.json())
-    //   .then(res => this.setState({ data: res.data }));
-  };
-
-  // our put method that uses our backend api
-  // to create new query into our data base
-  putDataToDB = message => {
-    // let currentIds = this.state.data.map(data => data.id);
-    // let idToBeAdded = 0;
-    // while (currentIds.includes(idToBeAdded)) {
-    //   ++idToBeAdded;
-    // }
-    // axios.post("/api/putData", {
-    //   id: idToBeAdded,
-    //   message: message
+  getLoggedInUser = () => {
+    // axios.get("/api/get-user").then(res => {
+    //   console.log(res);
+    //   this.setState({ username: "alex" });
     // });
   };
-
-  // our delete method that uses our backend api
-  // to remove existing database information
-  deleteFromDB = idTodelete => {
-    // let objIdToDelete = null;
-    // this.state.data.forEach(dat => {
-    //   if (dat.id === idTodelete) {
-    //     objIdToDelete = dat._id;
-    //   }
-    // });
-    // axios.delete("/api/deleteData", {
-    //   data: {
-    //     id: objIdToDelete
-    //   }
-    // });
+  handleDummyLogIn = e => {
+    e.preventDefault();
+    console.log(e.target.id);
+    this.setState({ username: "alex", loggedIn: true });
+  };
+  handleInputChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+  handleClickLogIn = e => {
+    e.preventDefault();
+    axios
+      .post("/api/user-login", {
+        username: "skipper",
+        password: "password"
+      })
+      .then(function(res) {
+        console.log(res);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
-  // our update method that uses our backend api
-  // to overwrite existing data base information
-  updateDB = (idToUpdate, updateToApply) => {
-    // let objIdToUpdate = null;
-    // this.state.data.forEach(dat => {
-    //   if (dat.id === idToUpdate) {
-    //     objIdToUpdate = dat._id;
-    //   }
-    // });
-    // axios.post("/api/updateData", {
-    //   id: objIdToUpdate,
-    //   update: { message: updateToApply }
-    // });
-  };
-
-  // here is our UI
-  // it is easy to understand their functions when you
-  // see them render into our screen
   render() {
     return (
       <div className={css(styles.body)}>
         <Nav clientWidth={this.state.clientWidth} />
         <Hero clientWidth={this.state.clientWidth} />
         <ThreeUp clientWidth={this.state.clientWidth} />
-        <FormTest />
+        <FormTest
+          loggedIn={this.state.loggedIn}
+          username={this.loggedIn ? "" : this.state.username}
+          handleDummyLogIn={this.handleDummyLogIn}
+          handleClickLogIn={this.handleClickLogIn}
+          handleInputChange={this.handleInputChange}
+          usernameSignInInput={this.state.usernameSignInInput}
+          passwordSignInInput={this.state.passwordSignInInput}
+          usernameNewUserInput={this.state.usernameNewUserInput}
+          passwordNewUserInput={this.state.passwordNewUserInput}
+          emailNewUserInput={this.state.emailNewUserInput}
+          locationNewUserInput={this.state.locationNewUserInput}
+        />
       </div>
     );
   }

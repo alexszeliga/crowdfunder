@@ -1,10 +1,20 @@
 # CROWDFUNDER MVP DESCRIBED BY A ROBOT
 
+## MVP Functions:
+
+- User can create post
+- User create blog for post
+- User can comment on post
+- User can comment on blog
+- User can vote on post
+- User can vote on blog
+- User can follow post
+
 Crowdfunder has two main routes: shop and post.
 
 Crowdfunder’s MVP search posts, filters posts, create post, create user, log in, log out, like post, follow post, comment post
 
-- Post has one name
+- Post has one title
 - Post has one creator
 - Post has one description
 - Post has one website

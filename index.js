@@ -1,10 +1,13 @@
 const dotenv = require("dotenv").config();
 
+var session = require("express-session");
+
+var passport = require("./config/passport");
+
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
 // const logger = require("morgan");
-const Models = require("./models/");
 
 const API_PORT = process.env.PORT || 3001;
 const app = express();
@@ -33,7 +36,16 @@ app.use(express.static("./client/build"));
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(logger("dev"));
+
+app.use(
+  session({
+    secret: "messed up unique string that is unlikely to be guessed",
+    resave: true,
+    saveUninitialized: true
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 require("./routes/apiRoutes")(app);

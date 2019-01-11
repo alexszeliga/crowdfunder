@@ -2,6 +2,9 @@ const db = require("../models");
 const path = require("path");
 
 module.exports = function(app) {
+  app.get("/api/get-user", function(req, res) {
+    res.send("alex");
+  });
   app.get("/api/all-users", function(req, res) {
     db.User.find(function(err, allUsers) {
       allUsers.filter(user => {

@@ -21,7 +21,13 @@ const userSchema = new Schema(
     },
     password: String,
     username: String,
-    location: String
+    location: String,
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post"
+      }
+    ]
   },
   { timestamps: true }
 );

@@ -2,36 +2,16 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class FormTest extends Component {
-  state = {
-    usernameSignInInput: "",
-    passwordSignInInput: "",
-    usernameNewUserInput: "",
-    passwordNewUserInput: "",
-    emailNewUserInput: "",
-    locationNewUserInput: ""
-  };
-  handleClickLogIn = e => {
-    e.preventDefault();
-    axios
-      .post("/api/user-login", {
-        username: this.state.usernameSignInInput,
-        password: this.state.passwordSignInInput
-      })
-      .then(function(res) {
-        console.log(res);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  };
+  state = {};
+
   handleClickNewUser = e => {
     e.preventDefault();
     axios
       .post("/api/user", {
-        username: this.state.usernameNewUserInput,
-        password: this.state.passwordNewUserInput,
-        email: this.state.emailNewUserInput,
-        location: this.state.locationNewUserInput
+        username: this.props.usernameNewUserInput,
+        password: this.props.passwordNewUserInput,
+        email: this.props.emailNewUserInput,
+        location: this.props.locationNewUserInput
       })
       .then(function(res) {
         console.log(res);
@@ -39,12 +19,6 @@ class FormTest extends Component {
       .catch(function(error) {
         console.log(error);
       });
-  };
-  handleInputChange = e => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
   };
 
   componentDidMount() {
@@ -58,48 +32,54 @@ class FormTest extends Component {
         <form>
           <input
             name="usernameSignInInput"
-            onChange={this.handleInputChange}
-            value={this.state.usernameSignInInput}
+            onChange={this.props.handleInputChange}
+            value={this.props.usernameSignInInput}
           />
           <label>username</label>
           <input
             name="passwordSignInInput"
-            onChange={this.handleInputChange}
-            value={this.state.passwordSignInInput}
+            onChange={this.props.handleInputChange}
+            value={this.props.passwordSignInInput}
           />
           <label>password</label>
           <br />
-          <button onClick={this.handleClickLogIn}>Log In</button>
+          <button onClick={this.props.handleClickLogIn}>Log In</button>
         </form>
         <br />
         <form>
           <input
             name="usernameNewUserInput"
-            onChange={this.handleInputChange}
-            value={this.state.usernameNewUserInput}
+            onChange={this.props.handleInputChange}
+            value={this.props.usernameNewUserInput}
           />
           <label>username</label>
           <input
             name="passwordNewUserInput"
-            onChange={this.handleInputChange}
-            value={this.state.passwordNewUserInput}
+            onChange={this.props.handleInputChange}
+            value={this.props.passwordNewUserInput}
           />
           <label>password</label>
           <input
             name="emailNewUserInput"
-            onChange={this.handleInputChange}
-            value={this.state.emailNewUserInput}
+            onChange={this.props.handleInputChange}
+            value={this.props.emailNewUserInput}
           />
           <label>email</label>
           <input
             name="locationNewUserInput"
-            onChange={this.handleInputChange}
-            value={this.state.locationNewUserInput}
+            onChange={this.props.handleInputChange}
+            value={this.props.locationNewUserInput}
           />
           <label>location</label>
           <br />
           <button onClick={this.handleClickNewUser}>New User</button>
         </form>
+        <form>
+          <button id={1} onClick={this.props.handleDummyLogIn}>
+            Dummy Log In
+          </button>
+        </form>
+        <div>Logged in: {this.props.loggedIn ? "true" : "false"}</div>
       </div>
     );
   }
