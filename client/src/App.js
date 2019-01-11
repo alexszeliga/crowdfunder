@@ -83,7 +83,22 @@ class App extends Component {
         console.log(error);
       });
   };
-
+  handleClickNewUser = e => {
+    e.preventDefault();
+    axios
+      .post("/api/user", {
+        username: this.sate.usernameNewUserInput,
+        password: this.sate.passwordNewUserInput,
+        email: this.sate.emailNewUserInput,
+        location: this.sate.locationNewUserInput
+      })
+      .then(function(res) {
+        console.log(res);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
   render() {
     return (
       <div className={css(styles.body)}>
@@ -102,6 +117,7 @@ class App extends Component {
           passwordNewUserInput={this.state.passwordNewUserInput}
           emailNewUserInput={this.state.emailNewUserInput}
           locationNewUserInput={this.state.locationNewUserInput}
+          handleClickNewUser={this.handleClickNewUser}
         />
       </div>
     );

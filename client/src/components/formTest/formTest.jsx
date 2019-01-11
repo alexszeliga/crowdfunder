@@ -4,23 +4,6 @@ import axios from "axios";
 class FormTest extends Component {
   state = {};
 
-  handleClickNewUser = e => {
-    e.preventDefault();
-    axios
-      .post("/api/user", {
-        username: this.props.usernameNewUserInput,
-        password: this.props.passwordNewUserInput,
-        email: this.props.emailNewUserInput,
-        location: this.props.locationNewUserInput
-      })
-      .then(function(res) {
-        console.log(res);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  };
-
   componentDidMount() {
     axios.get("/api/all-users").then(function(response) {
       console.log(response);
@@ -72,7 +55,7 @@ class FormTest extends Component {
           />
           <label>location</label>
           <br />
-          <button onClick={this.handleClickNewUser}>New User</button>
+          <button onClick={this.props.handleClickNewUser}>New User</button>
         </form>
         <form>
           <button id={1} onClick={this.props.handleDummyLogIn}>
