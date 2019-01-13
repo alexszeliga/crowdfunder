@@ -1,5 +1,6 @@
-var bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt-nodejs");
 const mongoose = require("mongoose");
+const passportLocalMongoose = require("passport-local-mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -21,7 +22,13 @@ const userSchema = new Schema(
     },
     password: String,
     username: String,
-    location: String
+    location: String,
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post"
+      }
+    ]
   },
   { timestamps: true }
 );
@@ -45,5 +52,6 @@ userSchema.pre("save", function() {
     );
   }
 });
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = exports = mongoose.model("User", userSchema);
