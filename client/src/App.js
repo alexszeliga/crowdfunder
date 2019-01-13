@@ -71,10 +71,16 @@ class App extends Component {
   };
   handleClickLogIn = e => {
     e.preventDefault();
+
+    // input validate
+    if (this.state.usernameSignInInput === "") {
+      console.log("input validation");
+      return;
+    }
     axios
       .post("/api/user-login", {
-        username: "skipper",
-        password: "password"
+        username: this.state.usernameSignInInput,
+        password: this.state.passwordSignInInput
       })
       .then(function(res) {
         console.log(res);
@@ -85,12 +91,13 @@ class App extends Component {
   };
   handleClickNewUser = e => {
     e.preventDefault();
+    console.log("Hello!");
     axios
       .post("/api/user", {
-        username: this.sate.usernameNewUserInput,
-        password: this.sate.passwordNewUserInput,
-        email: this.sate.emailNewUserInput,
-        location: this.sate.locationNewUserInput
+        username: this.state.usernameNewUserInput,
+        password: this.state.passwordNewUserInput,
+        email: this.state.emailNewUserInput,
+        location: this.state.locationNewUserInput
       })
       .then(function(res) {
         console.log(res);

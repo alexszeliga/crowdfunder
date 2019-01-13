@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 
 class FormTest extends Component {
-  state = {};
-
   componentDidMount() {
     axios.get("/api/all-users").then(function(response) {
       console.log(response);
@@ -58,7 +56,7 @@ class FormTest extends Component {
           <button onClick={this.props.handleClickNewUser}>New User</button>
         </form>
         <form>
-          <button id={1} onClick={this.props.handleDummyLogIn}>
+          <button id={1} onClick={this.props.handleClickLogIn}>
             Dummy Log In
           </button>
         </form>

@@ -1,10 +1,19 @@
 const db = require("../models");
 const path = require("path");
+var passport = require("../config/passport");
 
 module.exports = function(app) {
-  app.get("/api/get-user", function(req, res) {
-    res.send("alex");
+  app.post("/api/user-login", passport.authenticate("local"), function(
+    req,
+    res
+  ) {
+    res.send(req.user);
   });
+
+  // app.post("/api/user-login", function(req, res) {
+  //   console.log(req.body);
+  //   res.send("testing");
+  // });
   app.get("/api/all-users", function(req, res) {
     db.User.find(function(err, allUsers) {
       allUsers.filter(user => {
@@ -22,20 +31,7 @@ module.exports = function(app) {
         res.json(err);
       });
   });
-  app.post("/api/user-login", function(req, res) {
-    db.User.findOne({ username: req.body.username }, function(err, userFromDb) {
-      if (userFromDb !== null) {
-        if (userFromDb.validPassword(req.body.password)) {
-          res.json(userFromDb.username);
-        } else {
-          res.send("Incorrect Password");
-        }
-      } else {
-        // user not found
-        res.send("User not found");
-      }
-    });
-  });
+
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });
