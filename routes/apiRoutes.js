@@ -32,6 +32,19 @@ module.exports = function(app) {
       });
   });
 
+  app.get("/api/get-user", function(req, res) {
+    if (req.user) {
+      res.send(req.user);
+    } else {
+      res.send(false);
+    }
+  });
+
+  app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/");
+  });
+
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });

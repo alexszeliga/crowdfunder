@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { StyleSheet, css } from "aphrodite";
 
-class FormTest extends Component {
+const styles = StyleSheet.create({
+  hidden: {
+    display: "none"
+  }
+});
+
+class FormModal extends Component {
   componentDidMount() {
     axios.get("/api/all-users").then(function(response) {
       console.log(response);
@@ -9,7 +16,7 @@ class FormTest extends Component {
   }
   render() {
     return (
-      <div>
+      <div className={css(styles.hidden)}>
         <form>
           <input
             name="usernameSignInInput"
@@ -55,15 +62,9 @@ class FormTest extends Component {
           <br />
           <button onClick={this.props.handleClickNewUser}>New User</button>
         </form>
-        <form>
-          <button id={1} onClick={this.props.handleClickLogIn}>
-            Dummy Log In
-          </button>
-        </form>
-        <div>Logged in: {this.props.loggedIn ? "true" : "false"}</div>
       </div>
     );
   }
 }
 
-export default FormTest;
+export default FormModal;

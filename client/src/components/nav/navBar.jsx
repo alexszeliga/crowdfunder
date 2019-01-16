@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { StyleSheet, css } from "aphrodite";
+import FormModal from "./formModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SVG from "./menuBar";
+import SVG from "../menuBar";
 // import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   nav: {
     position: "absolute",
     width: "100vw",
@@ -68,6 +70,9 @@ const styles = StyleSheet.create({
   }
 });
 class Nav extends Component {
+  popModal = () => {
+    console.log("I'm the queen of france");
+  };
   destktopSearch = () => {
     return (
       <div className={css(styles.searchInputWrapper)}>
@@ -79,7 +84,13 @@ class Nav extends Component {
     return (
       <ul className={css(styles.menu)}>
         <li className={css(styles.navMenuItem)}>Help Me</li>
-        <li className={css(styles.navMenuItem)}>Sign In</li>
+        <li
+          className={css(styles.navMenuItem)}
+          id="getStarted"
+          onClick={this.popModal}
+        >
+          Get Started!
+        </li>
         <li className={css(styles.navMenuItem, styles.lastNavMenuItem)}>
           Get Funds
         </li>
@@ -101,13 +112,31 @@ class Nav extends Component {
           </div>
         )}
 
-        <div className={css(styles.logo)}>crowdfunder</div>
+        <div className={css(styles.logo)} onClick={this.props.handleLogOut}>
+          crowdfunder
+        </div>
         <div className={css(styles.menuWrap)}>
           {this.props.clientWidth > 767 ? (
             this.desktopMenu()
           ) : (
             <SVG style={styles.burger} width="21" />
           )}
+        </div>
+
+        <div>
+          <FormModal
+            loggedIn={this.props.loggedIn}
+            username={this.loggedIn ? "" : this.props.username}
+            handleClickLogIn={this.props.handleClickLogIn}
+            handleInputChange={this.props.handleInputChange}
+            usernameSignInInput={this.props.usernameSignInInput}
+            passwordSignInInput={this.props.passwordSignInInput}
+            usernameNewUserInput={this.props.usernameNewUserInput}
+            passwordNewUserInput={this.props.passwordNewUserInput}
+            emailNewUserInput={this.props.emailNewUserInput}
+            locationNewUserInput={this.props.locationNewUserInput}
+            handleClickNewUser={this.props.handleClickNewUser}
+          />
         </div>
       </nav>
     );
