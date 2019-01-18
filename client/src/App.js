@@ -1,10 +1,10 @@
 // /client/App.js
 import React, { Component } from "react";
+
 // import axios from "axios";
-import Nav from "./components/nav";
-import Hero from "./components/body/hero";
-import ThreeUp from "./components/body/threeUp";
-import FormTest from "./components/formTest/formTest";
+import Nav from "./components/nav/navBar";
+import Body from "./components/body/body";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import axios from "axios";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { StyleSheet, css } from "aphrodite";
 
+// TODO: does this need to be here?
 library.add(faSearch);
 library.add(faSchool);
 library.add(faQuidditch);
@@ -31,7 +32,8 @@ class App extends Component {
   state = {
     clientWidth: window.innerWidth,
     loggedIn: false,
-    username: "null",
+    userData: [],
+    userDataLogged: [],
     usernameSignInInput: "",
     passwordSignInInput: "",
     usernameNewUserInput: "",
@@ -53,15 +55,16 @@ class App extends Component {
     window.removeEventListener("resize", this.updateDimension);
   }
   getLoggedInUser = () => {
-    // axios.get("/api/get-user").then(res => {
-    //   console.log(res);
-    //   this.setState({ username: "alex" });
-    // });
-  };
-  handleDummyLogIn = e => {
-    e.preventDefault();
-    console.log(e.target.id);
-    this.setState({ username: "alex", loggedIn: true });
+    axios.get("/api/get-user").then(res => {
+      console.log(res.data);
+      if (res.data) {
+        this.setState({ userDataLogged: res.data });
+      } else {
+        // TODO: Handle failed login
+        // NOTE: This gets called on app load to see if the user is logged in via express session;
+        console.log("Shits fucked up");
+      }
+    });
   };
   handleInputChange = e => {
     const { name, value } = e.target;
@@ -82,10 +85,11 @@ class App extends Component {
         username: this.state.usernameSignInInput,
         password: this.state.passwordSignInInput
       })
-      .then(function(res) {
-        console.log(res);
+      .then(res => {
+        console.log(res.data);
+        this.getLoggedInUser();
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -99,8 +103,21 @@ class App extends Component {
         email: this.state.emailNewUserInput,
         location: this.state.locationNewUserInput
       })
-      .then(function(res) {
+      .then(res => {
         console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  handleLogOut = e => {
+    e.preventDefault();
+    console.log("handleLogOut");
+    axios
+      .get("/logout")
+      .then(function(response) {
+        console.log(response);
       })
       .catch(function(error) {
         console.log(error);
@@ -109,13 +126,11 @@ class App extends Component {
   render() {
     return (
       <div className={css(styles.body)}>
-        <Nav clientWidth={this.state.clientWidth} />
-        <Hero clientWidth={this.state.clientWidth} />
-        <ThreeUp clientWidth={this.state.clientWidth} />
-        <FormTest
+        <Nav
+          username={this.state.userDataLogged.username}
+          clientWidth={this.state.clientWidth}
+          handleLogOut={this.state.handleLogOut}
           loggedIn={this.state.loggedIn}
-          username={this.loggedIn ? "" : this.state.username}
-          handleDummyLogIn={this.handleDummyLogIn}
           handleClickLogIn={this.handleClickLogIn}
           handleInputChange={this.handleInputChange}
           usernameSignInInput={this.state.usernameSignInInput}
@@ -126,6 +141,7 @@ class App extends Component {
           locationNewUserInput={this.state.locationNewUserInput}
           handleClickNewUser={this.handleClickNewUser}
         />
+        <Body clientWidth={this.state.clientWidth} />
       </div>
     );
   }

@@ -8,16 +8,17 @@ var db = require("../models");
 passport.use(
   new LocalStrategy(function(username, password, done) {
     db.User.findOne({ username: username }, function(err, response) {
-      // console.log(response);
-      // if (!response) {
-      //   // invalid user
-      //   console.log("invalid user");
-      //   return done(null, false);
-      // } else if (!response.validPassword(password)) {
-      //   // invalid password
-      //   console.log("invalid password");
-      //   return done(null, false);
-      // }
+      console.log(response);
+      if (!response) {
+        // invalid user
+        console.log("invalid user");
+        return done(null, false);
+      } else if (!response.validPassword(password)) {
+        // invalid password
+        console.log("invalid password");
+        return done(null, false);
+      }
+      response.password = null;
       done(null, response);
     });
   })
