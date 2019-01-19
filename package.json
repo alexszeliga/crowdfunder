@@ -4,7 +4,8 @@
   "description": "a crowdfunding app",
   "main": "index.js",
   "engines": {
-    "node": "8.11.4"
+    "node": "8.11.4",
+    "npm": "6.4.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
