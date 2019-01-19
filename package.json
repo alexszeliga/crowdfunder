@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install --only=dev && npm install && npm run build",
-    "start": "concurrently \"node index.js\" \"cd client && npm start\""
+    "build": "npm install",
+    "start": "concurrently \"node index.js\" \"cd client && npm start\"",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-scripts": "^2.1.3"
   }
 }
