@@ -1,10 +1,8 @@
 // /client/App.js
 import React, { Component } from "react";
-
 // import axios from "axios";
 import Nav from "./components/nav/navBar";
 import Body from "./components/body/body";
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import axios from "axios";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,14 +30,17 @@ class App extends Component {
   state = {
     clientWidth: window.innerWidth,
     loggedIn: false,
-    userData: [],
     userDataLogged: [],
     usernameSignInInput: "",
     passwordSignInInput: "",
     usernameNewUserInput: "",
     passwordNewUserInput: "",
     emailNewUserInput: "",
-    locationNewUserInput: ""
+    locationNewUserInput: "",
+    modal: false,
+    chooseModal: false,
+    loginModal: false,
+    registerModal: false
   };
 
   updateDimension = () => {
@@ -56,13 +57,13 @@ class App extends Component {
   }
   getLoggedInUser = () => {
     axios.get("/api/get-user").then(res => {
-      console.log(res.data);
       if (res.data) {
+        console.log(`${res.data.username} is logged in`);
         this.setState({ userDataLogged: res.data });
       } else {
         // TODO: Handle failed login
         // NOTE: This gets called on app load to see if the user is logged in via express session;
-        console.log("Shits fucked up");
+        console.log("No logged in user found");
       }
     });
   };
@@ -86,7 +87,8 @@ class App extends Component {
         password: this.state.passwordSignInInput
       })
       .then(res => {
-        console.log(res.data);
+        // console.log(res.data);
+        this.handleModalClose();
         this.getLoggedInUser();
       })
       .catch(error => {
@@ -104,32 +106,70 @@ class App extends Component {
         location: this.state.locationNewUserInput
       })
       .then(res => {
-        console.log(res);
+        this.handleModalClose();
+        console.log("alex");
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  handleLogOut = e => {
-    e.preventDefault();
+  handleLogOut = () => {
     console.log("handleLogOut");
     axios
       .get("/logout")
       .then(function(response) {
         console.log(response);
+        window.location = response.data;
       })
       .catch(function(error) {
         console.log(error);
       });
   };
+  getStartedModal = () => {
+    this.setState({
+      chooseModal: true,
+      modal: true,
+      loginModal: false,
+      registerModal: false
+    });
+  };
+  handleModalChoice = choice => {
+    this.setState({ chooseModal: false });
+    switch (choice) {
+      case "login":
+        let currentLogin = this.state.loginModal;
+        this.setState({ loginModal: !currentLogin });
+        break;
+      case "register":
+        console.log("register");
+        let currentReg = this.state.registerModal;
+        this.setState({ registerModal: !currentReg });
+        break;
+      default:
+        break;
+    }
+  };
+  handleModalClose = () => {
+    this.setState({
+      modal: false,
+      chooseModal: false,
+      loginModal: false,
+      registerModal: false,
+      usernameSignInInput: "",
+      passwordSignInInput: "",
+      usernameNewUserInput: "",
+      passwordNewUserInput: "",
+      emailNewUserInput: "",
+      locationNewUserInput: ""
+    });
+  };
   render() {
     return (
       <div className={css(styles.body)}>
         <Nav
-          username={this.state.userDataLogged.username}
           clientWidth={this.state.clientWidth}
-          handleLogOut={this.state.handleLogOut}
+          handleLogOut={this.handleLogOut}
           loggedIn={this.state.loggedIn}
           handleClickLogIn={this.handleClickLogIn}
           handleInputChange={this.handleInputChange}
@@ -140,8 +180,19 @@ class App extends Component {
           emailNewUserInput={this.state.emailNewUserInput}
           locationNewUserInput={this.state.locationNewUserInput}
           handleClickNewUser={this.handleClickNewUser}
+          modal={this.state.modal}
+          chooseModal={this.state.chooseModal}
+          getStartedModal={this.getStartedModal}
+          handleModalChoice={this.handleModalChoice}
+          loginModal={this.state.loginModal}
+          registerModal={this.state.registerModal}
+          handleModalClose={this.handleModalClose}
         />
-        <Body clientWidth={this.state.clientWidth} />
+
+        <Body
+          clientWidth={this.state.clientWidth}
+          userDataLogged={this.state.userDataLogged}
+        />
       </div>
     );
   }

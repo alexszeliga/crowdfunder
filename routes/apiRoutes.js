@@ -41,11 +41,12 @@ module.exports = function(app) {
   });
 
   app.get("/logout", function(req, res) {
+    console.log("logout route hit");
     req.logout();
-    res.redirect("/");
+    res.send("/");
   });
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
-  });
+  // app.get("*", (req, res) => {
+  //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  // });
 };
