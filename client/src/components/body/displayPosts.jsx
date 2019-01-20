@@ -29,13 +29,23 @@ class DisplayPosts extends Component {
   };
   render() {
     console.log(this.props.posts);
-    return (
-      <div>
-        <h1>Posts Table</h1>
-        <div>Controls like search</div>
-        {this.showPosts(this.props.posts)}
-      </div>
-    );
+    if (this.props.posts.length > 0) {
+      return (
+        <div>
+          <h1>Posts Table</h1>
+          <div>Controls like search</div>
+          {this.showPosts(this.props.posts)}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h1>Posts Table</h1>
+          <div>Controls like search</div>
+          <h1>No posts</h1>
+        </div>
+      );
+    }
   }
 }
 

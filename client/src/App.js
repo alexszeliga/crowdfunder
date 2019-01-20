@@ -197,12 +197,15 @@ class App extends Component {
       .post("/api/new", {
         title: this.state.newPostPostTitle,
         tags: this.state.newPostPostTags,
-        username: this.state.userDataLogged.username
+        user: this.state.userDataLogged._id
       })
       .then(response => {
-        this.setState({ newPostPostTitle: "", newPostPostTags: "" });
+        this.setState({
+          newPostPostTitle: "",
+          newPostPostTags: "",
+          bodyRoute: "/user-home"
+        });
         //body route to user page
-        console.log(response);
       })
       .catch(function(error) {
         console.log(error);

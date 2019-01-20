@@ -6,8 +6,8 @@ module.exports = function(app) {
   app.post("/api/new", (req, res) => {
     console.log(req.body);
     db.Post.create(req.body).then(dbPost => {
-      return db.User.findOneAndUpdate(
-        { username: req.body.username },
+      return db.User.findByIdAndUpdate(
+        req.body.user,
         { $push: { posts: dbPost._id } },
         { new: true }
       ).then(dbUser => {
@@ -22,10 +22,6 @@ module.exports = function(app) {
     res.send(req.user);
   });
 
-  // app.post("/api/user-login", function(req, res) {
-  //   console.log(req.body);
-  //   res.send("testing");
-  // });
   app.get("/api/all-users", function(req, res) {
     db.User.find(function(err, allUsers) {
       allUsers.filter(user => {
@@ -35,9 +31,11 @@ module.exports = function(app) {
     });
   });
   app.get("/api/all-posts", function(req, res) {
-    db.Post.find(function(err, allPosts) {
-      res.send(allPosts);
-    });
+    db.Post.find()
+      .populate("users")
+      .exec(function(err, allPosts) {
+        res.send(allPosts);
+      });
   });
   app.post("/api/user", function(req, res) {
     db.User.create(req.body)
