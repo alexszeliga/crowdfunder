@@ -12,7 +12,6 @@ import {
   faQuidditch,
   faFlask
 } from "@fortawesome/free-solid-svg-icons";
-import { StyleSheet, css } from "aphrodite";
 
 // TODO: does this need to be here?
 library.add(faSearch);
@@ -20,11 +19,6 @@ library.add(faSchool);
 library.add(faQuidditch);
 library.add(faFlask);
 
-const styles = StyleSheet.create({
-  body: {
-    overflowX: "hidden"
-  }
-});
 class App extends Component {
   // initialize our state
   state = {
@@ -41,7 +35,21 @@ class App extends Component {
     chooseModal: false,
     loginModal: false,
     registerModal: false,
-    bodyRoute: "/"
+    bodyRoute: "/",
+    userPosts: [],
+    allPosts: []
+  };
+
+  checkAuth = () => {
+    let loggedIn = this.state.loggedIn;
+    if (loggedIn) {
+      // TODO: hit backend with username/userid and confirm they are real user and it === req.user.id
+      return true;
+    } else {
+      // any action that requires auth but doesn't get it should make the login window pop up
+      this.getStartedModal();
+      return false;
+    }
   };
 
   updateDimension = () => {
@@ -51,6 +59,7 @@ class App extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.updateDimension);
     this.getLoggedInUser();
+    this.getAllPosts();
   }
 
   componentWillUnmount() {
@@ -64,12 +73,22 @@ class App extends Component {
     axios.get("/api/get-user").then(res => {
       if (res.data) {
         console.log(res.data);
-        this.setState({ userDataLogged: res.data, loggedIn: true });
+        this.setState({
+          userDataLogged: res.data,
+          loggedIn: true,
+          userPosts: res.data.posts
+        });
       } else {
         // TODO: Handle failed login
         // NOTE: This gets called on app load to see if the user is logged in via express session;
         console.log("No logged in user found");
       }
+    });
+  };
+  getAllPosts = () => {
+    axios.get("/api/all-posts").then(res => {
+      console.log(res.data);
+      this.setState({ allPosts: res.data });
     });
   };
   handleInputChange = e => {
@@ -176,20 +195,30 @@ class App extends Component {
     e.preventDefault();
     axios
       .post("/api/new", {
-        title: "Post Title",
-        tags: "tags,commas,lists",
-        username: "skipper"
+        title: this.state.newPostPostTitle,
+        tags: this.state.newPostPostTags,
+        username: this.state.userDataLogged.username
       })
       .then(response => {
+        this.setState({ newPostPostTitle: "", newPostPostTags: "" });
+        //body route to user page
         console.log(response);
       })
       .catch(function(error) {
         console.log(error);
       });
   };
+
+  getPosts = userId => {
+    if (!userId) {
+      console.log("Requested posts with no args");
+    } else {
+      console.log(`Requested posts for ${userId}`);
+    }
+  };
   render() {
     return (
-      <div className={css(styles.body)}>
+      <div>
         <Nav
           clientWidth={this.state.clientWidth}
           handleLogOut={this.handleLogOut}
@@ -211,18 +240,22 @@ class App extends Component {
           registerModal={this.state.registerModal}
           handleModalClose={this.handleModalClose}
           navigateTo={this.navigateTo}
+          checkAuth={this.checkAuth}
         />
 
         <Body
+          allPosts={this.state.allPosts}
           handleInputChange={this.handleInputChange}
           clientWidth={this.state.clientWidth}
           getStartedModal={this.getStartedModal}
           userDataLogged={this.state.userDataLogged}
+          userPosts={this.state.userPosts}
           bodyRoute={this.state.bodyRoute}
           loggedIn={this.state.loggedIn}
           newPostPostTitle={this.state.newPostPostTitle}
           newPostPostTags={this.state.newPostPostTags}
           newPostSubmitPost={this.newPostSubmitPost}
+          getPosts={this.getPosts}
         />
       </div>
     );

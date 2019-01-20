@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Hero from "./hero";
 import ThreeUp from "./threeUp";
-import PostsHome from "./postsHome";
+import DisplayPosts from "./displayPosts";
 import NewPost from "./newPost";
+import UserHome from "./userHome";
 import "./body.css";
+import Axios from "axios";
 
 class Body extends Component {
   showUserName = () => {
@@ -26,8 +28,16 @@ class Body extends Component {
         return (
           <div>
             <ThreeUp clientWidth={this.props.clientWidth} />
-            <PostsHome />
+            <DisplayPosts posts={this.props.allPosts} />
           </div>
+        );
+      case "/user-home":
+        return (
+          <UserHome
+            userDataLogged={this.props.userDataLogged}
+            userPosts={this.props.userPosts}
+            getPosts={this.props.getPosts}
+          />
         );
       default:
         return <ThreeUp clientWidth={this.props.clientWidth} />;

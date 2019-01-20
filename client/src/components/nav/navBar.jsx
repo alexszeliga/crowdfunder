@@ -10,7 +10,6 @@ class Nav extends Component {
     }
   };
   signInOrLogOutButton = () => {
-    console.log(this.props.loggedIn);
     let bool = this.props.loggedIn;
     if (bool) {
       return (
@@ -34,6 +33,33 @@ class Nav extends Component {
       );
     }
   };
+
+  helpMeOrMyProfileButton = () => {
+    let bool = this.props.loggedIn;
+    if (bool) {
+      return (
+        <li
+          onClick={() => {
+            this.props.navigateTo("/user-home");
+          }}
+          className="navMenuItem"
+          id="getStarted"
+        >
+          <span className="navbtn">My Profile</span>
+        </li>
+      );
+    } else {
+      return (
+        <li
+          onClick={this.props.getStartedModal}
+          className="navMenuItem"
+          id="getStarted"
+        >
+          <span className="navbtn">Help Me</span>
+        </li>
+      );
+    }
+  };
   render() {
     return (
       <div>
@@ -46,16 +72,7 @@ class Nav extends Component {
           </div>
           <div className="menuWrap">
             <ul className="menu">
-              <li className="navMenuItem">
-                <span className="navbtn">Help Me</span>
-              </li>
-              {/* <li
-                onClick={this.props.getStartedModal}
-                className="navMenuItem"
-                id="getStarted"
-              >
-                <span className="navbtn">Sign In</span>
-              </li> */}
+              {this.helpMeOrMyProfileButton()}
               {this.signInOrLogOutButton()}
               <li className="navMenuItem lastNavMenuItem">
                 <span
@@ -70,11 +87,13 @@ class Nav extends Component {
             </ul>
           </div>
         </nav>
-        <div className={`modalFocus ${this.props.modal ? "" : "hidden"}`}>
+        <div className={`modalFocus ${this.props.modal ? "show" : "hidden"}`}>
           <div className="modalBox">
             <div className="modalClose" onClick={this.props.handleModalClose} />
             <div
-              className={`formSignIn ${this.props.chooseModal ? "" : "hidden"}`}
+              className={`formSignIn ${
+                this.props.chooseModal ? "show" : "hidden"
+              }`}
             >
               <button
                 onClick={() => {
@@ -159,7 +178,7 @@ class Nav extends Component {
                 Log In
               </button>
             </div>
-            <span className />
+            <span />
           </div>
         </div>
       </div>

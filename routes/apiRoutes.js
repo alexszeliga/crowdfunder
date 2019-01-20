@@ -34,6 +34,11 @@ module.exports = function(app) {
       res.json(allUsers);
     });
   });
+  app.get("/api/all-posts", function(req, res) {
+    db.Post.find(function(err, allPosts) {
+      res.send(allPosts);
+    });
+  });
   app.post("/api/user", function(req, res) {
     db.User.create(req.body)
       .then(function(userAddResponse) {
