@@ -5,11 +5,12 @@ const postSchema = new Schema({
   title: {
     type: String
   },
-  description: {
+  tags: {
     type: String
   },
-  website: {
-    type: String
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 });
 

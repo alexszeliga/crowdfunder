@@ -1,0 +1,15 @@
+.newPostPostTitle {
+    display: block;
+    width: 50%;
+    margin: auto;
+}
+
+.newPostPostTags {
+    display: block;
+    width: 50%;
+    margin: auto;
+}
+
+.formWrapper {
+    text-align: center;
+}

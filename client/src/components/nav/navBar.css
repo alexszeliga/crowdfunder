@@ -1,116 +1,121 @@
 .nav {
-  position: relative;
-  width: 100vw;
-  color: rgb(166, 215, 221, 1);
-  font-family: "Raleway", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 0px 20px 0px rgba(178, 178, 178, 0.47);
-  z-index: 2;
-  background-color: white;
+    position: relative;
+    width: 100vw;
+    color: rgb(166, 215, 221, 1);
+    font-family: "Raleway", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 20px 0px rgba(178, 178, 178, 0.47);
+    z-index: 2;
+    background-color: white;
 }
 
 .menuWrap {
-  flex: 1;
-  text-align: right;
+    flex: 1;
+    text-align: right;
 }
 
 .menu {
-  text-align: center;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  color: black;
+    text-align: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    color: black;
 }
 
 .navMenuItem {
-  display: inline-block;
-  width: 33%;
-  cursor: pointer;
+    display: inline-block;
+    width: 33%;
+    cursor: pointer;
 }
 
 .navbtn {
-  display: inline-block;
-  border: 1px solid black;
-  padding: 0.1em 0em;
-  border-radius: 2px;
-  width: 95%;
+    display: inline-block;
+    border: 1px solid black;
+    padding: 0.1em 0em;
+    border-radius: 2px;
+    width: 95%;
 }
 
 .navbtn:hover {
-  background-color: rgba(63, 90, 144, 0.47);
+    background-color: rgba(63, 90, 144, 0.47);
 }
 
 .logo {
-  font-family: "Patua One", cursive;
-  font-size: 2.5rem;
-  letter-spacing: -0.8px;
-  flex: 1;
-  text-align: center;
+    font-family: "Patua One", cursive;
+    font-size: 2.5rem;
+    letter-spacing: -0.8px;
+    flex: 1;
+    text-align: center;
 }
 
 .button-style {
-  margin-top: 1em;
+    margin-top: 1em;
 }
 
 .faBlock {
-  display: block;
-  color: black;
+    display: block;
+    color: black;
 }
 
 .searchInputWrapper {
-  flex: 1;
+    flex: 1;
 }
 
 .searchInput {
-  display: block;
-  margin-left: 9px;
-  border: 0px solid black;
-  padding: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
-  outline: none;
+    display: block;
+    margin-left: 9px;
+    border: 1px solid rgba(0, 102, 125, 0.653);
+    border-radius: 2px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+}
+
+.searchInput:focus {
+    border: 1px solid rgba(1, 58, 71, 0.85);
 }
 
 .modalFocus {
-  position: fixed;
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(255, 255, 255, 0.5);
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
 .modalBox {
-  position: relative;
-  background-color: white;
-  border: 1px solid black;
+    position: relative;
+    background-color: white;
+    border: 1px solid black;
 }
 
 .modalClose {
-  position: absolute;
-  right: 0.2em;
-  top: 0.2em;
-  width: 1em;
-  height: 1em;
-  border: 1px solid black;
-  border-radius: 2px;
+    position: absolute;
+    right: 0.2em;
+    top: 0.2em;
+    width: 1em;
+    height: 1em;
+    border: 1px solid black;
+    border-radius: 2px;
 }
 
 .modalClose:hover {
-  background-color: rgba(147, 0, 0, 0.47);
+    background-color: rgba(147, 0, 0, 0.47);
 }
 
 .formSignIn {
-  padding: 2em;
+    padding: 2em;
 }
 
 .formSignUp {
-  padding: 2em;
+    padding: 2em;
 }
 
 .hidden {
-  display: none !important;
+    display: none !important;
 }

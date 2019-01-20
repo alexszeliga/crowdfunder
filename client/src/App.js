@@ -40,7 +40,8 @@ class App extends Component {
     modal: false,
     chooseModal: false,
     loginModal: false,
-    registerModal: false
+    registerModal: false,
+    bodyRoute: "/"
   };
 
   updateDimension = () => {
@@ -55,11 +56,15 @@ class App extends Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimension);
   }
+
+  navigateTo = route => {
+    this.setState({ bodyRoute: route });
+  };
   getLoggedInUser = () => {
     axios.get("/api/get-user").then(res => {
       if (res.data) {
-        console.log(`${res.data.username} is logged in`);
-        this.setState({ userDataLogged: res.data });
+        console.log(res.data);
+        this.setState({ userDataLogged: res.data, loggedIn: true });
       } else {
         // TODO: Handle failed login
         // NOTE: This gets called on app load to see if the user is logged in via express session;
@@ -118,8 +123,9 @@ class App extends Component {
     console.log("handleLogOut");
     axios
       .get("/logout")
-      .then(function(response) {
+      .then(response => {
         console.log(response);
+        this.setState({ loggedIn: false, userDataLogged: [], bodyRoute: "/" });
         window.location = response.data;
       })
       .catch(function(error) {
@@ -161,8 +167,25 @@ class App extends Component {
       usernameNewUserInput: "",
       passwordNewUserInput: "",
       emailNewUserInput: "",
-      locationNewUserInput: ""
+      locationNewUserInput: "",
+      newPostPostTitle: "",
+      newPostPostTags: ""
     });
+  };
+  newPostSubmitPost = e => {
+    e.preventDefault();
+    axios
+      .post("/api/new", {
+        title: "Post Title",
+        tags: "tags,commas,lists",
+        username: "skipper"
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
   render() {
     return (
@@ -187,11 +210,19 @@ class App extends Component {
           loginModal={this.state.loginModal}
           registerModal={this.state.registerModal}
           handleModalClose={this.handleModalClose}
+          navigateTo={this.navigateTo}
         />
 
         <Body
+          handleInputChange={this.handleInputChange}
           clientWidth={this.state.clientWidth}
+          getStartedModal={this.getStartedModal}
           userDataLogged={this.state.userDataLogged}
+          bodyRoute={this.state.bodyRoute}
+          loggedIn={this.state.loggedIn}
+          newPostPostTitle={this.state.newPostPostTitle}
+          newPostPostTags={this.state.newPostPostTags}
+          newPostSubmitPost={this.newPostSubmitPost}
         />
       </div>
     );

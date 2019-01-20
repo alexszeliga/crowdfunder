@@ -3,6 +3,18 @@ const path = require("path");
 var passport = require("../config/passport");
 
 module.exports = function(app) {
+  app.post("/api/new", (req, res) => {
+    console.log(req.body);
+    db.Post.create(req.body).then(dbPost => {
+      return db.User.findOneAndUpdate(
+        { username: req.body.username },
+        { $push: { posts: dbPost._id } },
+        { new: true }
+      ).then(dbUser => {
+        res.send(dbUser);
+      });
+    });
+  });
   app.post("/api/user-login", passport.authenticate("local"), function(
     req,
     res
@@ -34,7 +46,11 @@ module.exports = function(app) {
 
   app.get("/api/get-user", function(req, res) {
     if (req.user) {
-      res.send(req.user);
+      db.User.findOne({ username: req.user.username })
+        .populate("posts")
+        .exec((err, user) => {
+          res.send(user);
+        });
     } else {
       res.send(false);
     }

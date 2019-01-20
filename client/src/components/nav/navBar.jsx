@@ -9,7 +9,31 @@ class Nav extends Component {
       return <div className="modalbox" />;
     }
   };
-
+  signInOrLogOutButton = () => {
+    console.log(this.props.loggedIn);
+    let bool = this.props.loggedIn;
+    if (bool) {
+      return (
+        <li
+          onClick={this.props.handleLogOut}
+          className="navMenuItem"
+          id="getStarted"
+        >
+          <span className="navbtn">Log Out</span>
+        </li>
+      );
+    } else {
+      return (
+        <li
+          onClick={this.props.getStartedModal}
+          className="navMenuItem"
+          id="getStarted"
+        >
+          <span className="navbtn">Sign In</span>
+        </li>
+      );
+    }
+  };
   render() {
     return (
       <div>
@@ -25,15 +49,23 @@ class Nav extends Component {
               <li className="navMenuItem">
                 <span className="navbtn">Help Me</span>
               </li>
-              <li
+              {/* <li
                 onClick={this.props.getStartedModal}
                 className="navMenuItem"
                 id="getStarted"
               >
                 <span className="navbtn">Sign In</span>
-              </li>
+              </li> */}
+              {this.signInOrLogOutButton()}
               <li className="navMenuItem lastNavMenuItem">
-                <span className="navbtn">Get Funds</span>
+                <span
+                  className="navbtn"
+                  onClick={() => {
+                    this.props.navigateTo("/new-post");
+                  }}
+                >
+                  New Campaign
+                </span>
               </li>
             </ul>
           </div>
