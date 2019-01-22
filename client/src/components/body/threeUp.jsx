@@ -39,7 +39,7 @@ class ThreeUp extends Component {
     const faSize = this.props.clientWidth > 767 ? "5x" : "3x";
     return (
       <div className={css(styles.threeUp)}>
-        <div className={css(styles.block)}>
+        {/* <div className={css(styles.block)}>
           <FontAwesomeIcon
             className={css(styles.faBlock)}
             size={faSize}
@@ -62,7 +62,7 @@ class ThreeUp extends Component {
             icon="school"
           />
           <h3 className={css(styles.headthree)}>Your community</h3>
-        </div>
+        </div> */}
       </div>
     );
   }

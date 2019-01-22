@@ -45,7 +45,7 @@ class Nav extends Component {
           className="navMenuItem"
           id="getStarted"
         >
-          <span className="navbtn">My Profile</span>
+          <span className="navbtn">{this.props.userDataLogged.username}</span>
         </li>
       );
     } else {
@@ -67,7 +67,12 @@ class Nav extends Component {
           <div className="searchInputWrapper">
             <input className="searchInput" />
           </div>
-          <div className="logo" onClick={this.props.handleLogOut}>
+          <div
+            className="logo"
+            onClick={() => {
+              this.props.navigateTo("/");
+            }}
+          >
             crowdfunder
           </div>
           <div className="menuWrap">
@@ -77,9 +82,13 @@ class Nav extends Component {
               <li className="navMenuItem lastNavMenuItem">
                 <span
                   className="navbtn"
-                  onClick={() => {
-                    this.props.navigateTo("/new-post");
-                  }}
+                  onClick={
+                    this.props.loggedIn
+                      ? () => {
+                          this.props.navigateTo("/new-post");
+                        }
+                      : this.props.getStartedModal
+                  }
                 >
                   New Campaign
                 </span>
@@ -95,20 +104,22 @@ class Nav extends Component {
                 this.props.chooseModal ? "show" : "hidden"
               }`}
             >
-              <button
+              <div
+                className="modal-button"
                 onClick={() => {
                   this.props.handleModalChoice("register");
                 }}
               >
                 Register
-              </button>
-              <button
+              </div>
+              <div
+                className="modal-button"
                 onClick={() => {
                   this.props.handleModalChoice("login");
                 }}
               >
                 Log In
-              </button>
+              </div>
             </div>
             <div
               className={`formSignUp ${

@@ -1,27 +1,27 @@
 .background-image {
-  position: relative;
-  width: 100vw;
-  background-image: url("./sky.jpg");
-  z-index: -1 !important;
-  background-size: 100% auto;
+    position: relative;
+    width: 100%;
+    background-image: url("./sky.jpg");
+    z-index: -1 !important;
+    background-size: 100% auto;
 }
 
 .hero-headline {
-  text-align: center;
-  font-size: 300%;
-  padding: 3em 0em 2em 0em;
-  margin: 0;
-  font-family: "Raleway";
+    text-align: center;
+    font-size: 300%;
+    padding: 3em 0em 2em 0em;
+    margin: 0;
+    font-family: "Raleway";
 }
 
 @media (max-width: 767px) {
-  .hero-headline {
-    font-size: 200%;
-  }
+    .hero-headline {
+        font-size: 200%;
+    }
 }
 
 .clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
+    content: "";
+    clear: both;
+    display: table;
 }

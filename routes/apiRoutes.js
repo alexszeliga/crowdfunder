@@ -64,6 +64,13 @@ module.exports = function(app) {
     req.logout();
     res.send("/");
   });
+  app.get("/api/single-post/:postId", function(req, res) {
+    console.log(req.params);
+    db.Post.findById(req.params.postId).then(response => {
+      // console.log(response);
+      res.send(response);
+    });
+  });
 
   // app.get("*", (req, res) => {
   //   res.sendFile(path.join(__dirname, "./client/build/index.html"));

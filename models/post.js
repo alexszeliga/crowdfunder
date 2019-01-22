@@ -6,7 +6,7 @@ const postSchema = new Schema({
     type: String
   },
   tags: {
-    type: String
+    type: Array
   },
   user: {
     type: Schema.Types.ObjectId,

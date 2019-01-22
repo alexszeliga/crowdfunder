@@ -4,15 +4,15 @@ import ThreeUp from "./threeUp";
 import DisplayPosts from "./displayPosts";
 import NewPost from "./newPost";
 import UserHome from "./userHome";
+import SinglePost from "./singlePost";
 import "./body.css";
-import Axios from "axios";
 
 class Body extends Component {
   showUserName = () => {
     return;
   };
 
-  bodyComponents = () => {
+  render() {
     let route = this.props.bodyRoute;
     switch (route) {
       case "/new-post":
@@ -27,33 +27,42 @@ class Body extends Component {
       case "/":
         return (
           <div>
-            <ThreeUp clientWidth={this.props.clientWidth} />
-            <DisplayPosts posts={this.props.allPosts} />
+            <Hero clientWidth={this.props.clientWidth} />
+            <div className="wrapper">
+              <ThreeUp clientWidth={this.props.clientWidth} />
+              <DisplayPosts
+                posts={this.props.allPosts}
+                handleDisplayPost={this.props.handleDisplayPost}
+              />
+            </div>
           </div>
         );
       case "/user-home":
         return (
-          <UserHome
-            userDataLogged={this.props.userDataLogged}
-            userPosts={this.props.userPosts}
-            getPosts={this.props.getPosts}
-          />
+          <div className="wrapper">
+            <UserHome
+              userDataLogged={this.props.userDataLogged}
+              userPosts={this.props.userPosts}
+              handleDisplayPost={this.props.handleDisplayPost}
+            />
+          </div>
+        );
+      case "/single-post":
+        return (
+          <div>
+            <Hero clientWidth={this.props.clientWidth} />
+            <div className="wrapper">
+              <SinglePost
+                currentPostId={this.props.currentPostId}
+                getSinglePost={this.props.getSinglePost}
+                currentPostData={this.props.currentPostData}
+              />
+            </div>
+          </div>
         );
       default:
         return <ThreeUp clientWidth={this.props.clientWidth} />;
     }
-  };
-
-  render() {
-    return (
-      <div>
-        <Hero clientWidth={this.props.clientWidth} />
-        <div className="wrapper">
-          {`UserName: ${this.props.userDataLogged.username}`}
-          {this.bodyComponents()}
-        </div>
-      </div>
-    );
   }
 }
 

@@ -22,7 +22,7 @@ library.add(faFlask);
 class App extends Component {
   // initialize our state
   state = {
-    clientWidth: window.innerWidth,
+    clientWidth: document.body.clientWidth,
     loggedIn: false,
     userDataLogged: [],
     usernameSignInInput: "",
@@ -37,7 +37,9 @@ class App extends Component {
     registerModal: false,
     bodyRoute: "/",
     userPosts: [],
-    allPosts: []
+    allPosts: [],
+    currentPostId: "",
+    currentPostData: []
   };
 
   checkAuth = () => {
@@ -53,7 +55,7 @@ class App extends Component {
   };
 
   updateDimension = () => {
-    this.setState({ clientWidth: window.innerWidth });
+    this.setState({ clientWidth: document.body.clientWidth });
   };
 
   componentDidMount() {
@@ -67,12 +69,14 @@ class App extends Component {
   }
 
   navigateTo = route => {
+    this.getAllPosts();
+    this.getLoggedInUser();
     this.setState({ bodyRoute: route });
   };
   getLoggedInUser = () => {
     axios.get("/api/get-user").then(res => {
       if (res.data) {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({
           userDataLogged: res.data,
           loggedIn: true,
@@ -81,13 +85,13 @@ class App extends Component {
       } else {
         // TODO: Handle failed login
         // NOTE: This gets called on app load to see if the user is logged in via express session;
-        console.log("No logged in user found");
+        // console.log("No logged in user found");
       }
     });
   };
   getAllPosts = () => {
     axios.get("/api/all-posts").then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       this.setState({ allPosts: res.data });
     });
   };
@@ -121,7 +125,7 @@ class App extends Component {
   };
   handleClickNewUser = e => {
     e.preventDefault();
-    console.log("Hello!");
+
     axios
       .post("/api/user", {
         username: this.state.usernameNewUserInput,
@@ -130,8 +134,19 @@ class App extends Component {
         location: this.state.locationNewUserInput
       })
       .then(res => {
-        this.handleModalClose();
-        console.log("alex");
+        axios
+          .post("/api/user-login", {
+            username: this.state.usernameNewUserInput,
+            password: this.state.passwordNewUserInput
+          })
+          .then(res => {
+            // console.log(res.data);
+            this.handleModalClose();
+            this.getLoggedInUser();
+          })
+          .catch(error => {
+            console.log(error);
+          });
       })
       .catch(error => {
         console.log(error);
@@ -139,11 +154,10 @@ class App extends Component {
   };
 
   handleLogOut = () => {
-    console.log("handleLogOut");
     axios
       .get("/logout")
       .then(response => {
-        console.log(response);
+        // console.log(response);
         this.setState({ loggedIn: false, userDataLogged: [], bodyRoute: "/" });
         window.location = response.data;
       })
@@ -167,7 +181,7 @@ class App extends Component {
         this.setState({ loginModal: !currentLogin });
         break;
       case "register":
-        console.log("register");
+        // console.log("register");
         let currentReg = this.state.registerModal;
         this.setState({ registerModal: !currentReg });
         break;
@@ -196,15 +210,17 @@ class App extends Component {
     axios
       .post("/api/new", {
         title: this.state.newPostPostTitle,
-        tags: this.state.newPostPostTags,
+        tags: this.state.newPostPostTags.split(",").map(tagWhtSpc => {
+          return tagWhtSpc.trim();
+        }),
         user: this.state.userDataLogged._id
       })
       .then(response => {
         this.setState({
           newPostPostTitle: "",
-          newPostPostTags: "",
-          bodyRoute: "/user-home"
+          newPostPostTags: ""
         });
+        this.navigateTo("/user-home");
         //body route to user page
       })
       .catch(function(error) {
@@ -212,17 +228,21 @@ class App extends Component {
       });
   };
 
-  getPosts = userId => {
-    if (!userId) {
-      console.log("Requested posts with no args");
-    } else {
-      console.log(`Requested posts for ${userId}`);
-    }
+  handleDisplayPost = e => {
+    // console.log(e.target.id);
+    this.setState({ currentPostId: e.target.id, bodyRoute: "/single-post" });
+  };
+  getSinglePost = id => {
+    axios.get("/api/single-post/" + id).then(post => {
+      console.log(post.data);
+      this.setState({ currentPostData: post.data });
+    });
   };
   render() {
     return (
       <div>
         <Nav
+          userDataLogged={this.state.userDataLogged}
           clientWidth={this.state.clientWidth}
           handleLogOut={this.handleLogOut}
           loggedIn={this.state.loggedIn}
@@ -258,7 +278,10 @@ class App extends Component {
           newPostPostTitle={this.state.newPostPostTitle}
           newPostPostTags={this.state.newPostPostTags}
           newPostSubmitPost={this.newPostSubmitPost}
-          getPosts={this.getPosts}
+          handleDisplayPost={this.handleDisplayPost}
+          currentPostId={this.state.currentPostId}
+          getSinglePost={this.getSinglePost}
+          currentPostData={this.state.currentPostData}
         />
       </div>
     );

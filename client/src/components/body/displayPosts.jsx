@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import "./displayPosts.css";
 
 class DisplayPosts extends Component {
-  commaListToArray = stringList => {
-    return stringList.split(",");
-  };
-
   showPosts = postArray => {
     if (postArray.length > 0) {
       return (
@@ -14,12 +10,18 @@ class DisplayPosts extends Component {
           {this.props.posts.map((post, i) => {
             return (
               <li>
-                <h1>{post.title}</h1>
-                <section>
-                  {post.tags.split(",").map((tag, i) => {
+                <h3
+                  className="postLink"
+                  id={post._id}
+                  onClick={this.props.handleDisplayPost}
+                >
+                  {post.title}
+                </h3>
+                <div className="tagRow">
+                  {post.tags.map((tag, i) => {
                     return <span className="tag">{tag}</span>;
                   })}
-                </section>
+                </div>
               </li>
             );
           })}
@@ -28,18 +30,20 @@ class DisplayPosts extends Component {
     }
   };
   render() {
-    console.log(this.props.posts);
+    // console.log(this.props.posts);
     if (this.props.posts.length > 0) {
       return (
-        <div>
+        <div className="displayPosts">
           <h1>Posts Table</h1>
           <div>Controls like search</div>
-          {this.showPosts(this.props.posts)}
+          <div className="postListWrapper">
+            {this.showPosts(this.props.posts)}
+          </div>
         </div>
       );
     } else {
       return (
-        <div>
+        <div className="displayPosts">
           <h1>Posts Table</h1>
           <div>Controls like search</div>
           <h1>No posts</h1>
