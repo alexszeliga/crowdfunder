@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // import axios from "axios";
 import Nav from "./components/nav/navBar";
 import Body from "./components/body/body";
+import Modal from "./components/modal/modal";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import axios from "axios";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,7 +40,17 @@ class App extends Component {
     userPosts: [],
     allPosts: [],
     currentPostId: "",
-    currentPostData: []
+    currentPostData: [],
+    currentPostUser: [],
+    newPostPostTitle: "",
+    newPostPostTags: "",
+    newPostPostUrl: "",
+    navHeight: 0,
+    modalRoute: "",
+    modalStatus: false,
+    editPostTags: "",
+    editPostTitle: "",
+    editPostImgUrl: ""
   };
 
   checkAuth = () => {
@@ -152,7 +163,9 @@ class App extends Component {
         console.log(error);
       });
   };
-
+  setNavHeight = height => {
+    this.setState({ navHeight: height });
+  };
   handleLogOut = () => {
     axios
       .get("/logout")
@@ -202,7 +215,10 @@ class App extends Component {
       emailNewUserInput: "",
       locationNewUserInput: "",
       newPostPostTitle: "",
-      newPostPostTags: ""
+      newPostPostTags: "",
+      newPostPostUrl: "",
+      modalRoute: "",
+      modalStatus: false
     });
   };
   newPostSubmitPost = e => {
@@ -213,12 +229,14 @@ class App extends Component {
         tags: this.state.newPostPostTags.split(",").map(tagWhtSpc => {
           return tagWhtSpc.trim();
         }),
+        imgUrl: this.state.newPostPostUrl,
         user: this.state.userDataLogged._id
       })
       .then(response => {
         this.setState({
           newPostPostTitle: "",
-          newPostPostTags: ""
+          newPostPostTags: "",
+          newPostPostUrl: ""
         });
         this.navigateTo("/user-home");
         //body route to user page
@@ -234,14 +252,54 @@ class App extends Component {
   };
   getSinglePost = id => {
     axios.get("/api/single-post/" + id).then(post => {
-      console.log(post.data);
       this.setState({ currentPostData: post.data });
+      axios.get(`/api/user/${post.data.user}`).then(user => {
+        // console.log(user.data);
+        user.data.__proto__ = "";
+        this.setState({
+          currentPostUser: user.data
+        });
+      });
     });
+  };
+  handleEditPost = () => {
+    // console.log("handleEditPost");
+    this.setState({ modalRoute: "editPost", modalStatus: true });
+  };
+  handlePostBlog = () => {
+    // console.log("handlePostBlog");
+    this.setState({ modalRoute: "postBlog", modalStatus: true });
+  };
+  modalReset = () => {
+    // console.log("modalReset");
+    this.setState({ modalRoute: "", modalStatus: false });
+  };
+  handleUpdatePost = () => {
+    let updateFields = {};
+    const { editPostImgUrl, editPostTags, editPostTitle } = this.state;
+    if (editPostImgUrl) {
+      updateFields.imgUrl = editPostImgUrl;
+    }
+    if (editPostTags) {
+      updateFields.tags = editPostTags;
+    }
+    if (editPostTitle) {
+      updateFields.title = editPostTitle;
+    }
+
+    console.log(updateFields);
+    axios
+      .post("/api/update-post/" + this.state.currentPostId, updateFields)
+      .then(res => {
+        this.getSinglePost(this.state.currentPostId);
+        this.modalReset();
+      });
   };
   render() {
     return (
       <div>
         <Nav
+          setNavHeight={this.setNavHeight}
           userDataLogged={this.state.userDataLogged}
           clientWidth={this.state.clientWidth}
           handleLogOut={this.handleLogOut}
@@ -265,8 +323,18 @@ class App extends Component {
           navigateTo={this.navigateTo}
           checkAuth={this.checkAuth}
         />
-
+        <Modal
+          modalRoute={this.state.modalRoute}
+          modalStatus={this.state.modalStatus}
+          modalReset={this.modalReset}
+          currentPostData={this.state.currentPostData}
+          handleUpdatePost={this.handleUpdatePost}
+          handleInputChange={this.handleInputChange}
+        />
         <Body
+          handleEditPost={this.handleEditPost}
+          handlePostBlog={this.handlePostBlog}
+          navHeight={this.state.navHeight}
           allPosts={this.state.allPosts}
           handleInputChange={this.handleInputChange}
           clientWidth={this.state.clientWidth}
@@ -282,6 +350,7 @@ class App extends Component {
           currentPostId={this.state.currentPostId}
           getSinglePost={this.getSinglePost}
           currentPostData={this.state.currentPostData}
+          currentPostUser={this.state.currentPostUser}
         />
       </div>
     );

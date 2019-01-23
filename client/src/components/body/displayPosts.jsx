@@ -6,7 +6,6 @@ class DisplayPosts extends Component {
     if (postArray.length > 0) {
       return (
         <ul>
-          {/* render posts based on data object */}
           {this.props.posts.map((post, i) => {
             return (
               <li>
@@ -30,12 +29,9 @@ class DisplayPosts extends Component {
     }
   };
   render() {
-    // console.log(this.props.posts);
     if (this.props.posts.length > 0) {
       return (
         <div className="displayPosts">
-          <h1>Posts Table</h1>
-          <div>Controls like search</div>
           <div className="postListWrapper">
             {this.showPosts(this.props.posts)}
           </div>

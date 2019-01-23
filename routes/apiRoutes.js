@@ -4,7 +4,7 @@ var passport = require("../config/passport");
 
 module.exports = function(app) {
   app.post("/api/new", (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     db.Post.create(req.body).then(dbPost => {
       return db.User.findByIdAndUpdate(
         req.body.user,
@@ -30,6 +30,15 @@ module.exports = function(app) {
       res.json(allUsers);
     });
   });
+
+  app.get("/api/user/:id", function(req, res) {
+    db.User.findById(req.params.id).then(function(userData) {
+      // console.log(userData);
+      userData.password = undefined;
+
+      res.send(userData);
+    });
+  });
   app.get("/api/all-posts", function(req, res) {
     db.Post.find()
       .populate("users")
@@ -46,6 +55,14 @@ module.exports = function(app) {
         res.json(err);
       });
   });
+  app.post("/api/update-post/:id", function(req, res) {
+    console.log(req.body);
+
+    db.Post.findByIdAndUpdate(req.params.id, req.body, function(err, post) {
+      console.log(post);
+      res.send(post);
+    });
+  });
 
   app.get("/api/get-user", function(req, res) {
     if (req.user) {
@@ -60,15 +77,16 @@ module.exports = function(app) {
   });
 
   app.get("/logout", function(req, res) {
-    console.log("logout route hit");
+    // console.log("logout route hit");
     req.logout();
     res.send("/");
   });
   app.get("/api/single-post/:postId", function(req, res) {
-    console.log(req.params);
-    db.Post.findById(req.params.postId).then(response => {
-      // console.log(response);
-      res.send(response);
+    // console.log(req.params.postId);
+    db.Post.findById(req.params.postId).then(postResponse => {
+      // console.log(postResponse);
+
+      res.send(postResponse);
     });
   });
 

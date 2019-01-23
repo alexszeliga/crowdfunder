@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import "./navBar.css";
 
 class Nav extends Component {
+  componentDidMount() {
+    this.props.setNavHeight(
+      document.getElementsByClassName("nav")[0].offsetHeight
+    );
+  }
   displayModal = choice => {
     if (choice === "login") {
       return <div className="modalbox" />;
@@ -62,8 +67,8 @@ class Nav extends Component {
   };
   render() {
     return (
-      <div>
-        <nav className="nav">
+      <div className="navWrap clearfix">
+        <nav className="nav clearfix">
           <div className="searchInputWrapper">
             <input className="searchInput" />
           </div>
@@ -96,6 +101,7 @@ class Nav extends Component {
             </ul>
           </div>
         </nav>
+        <div className="clearfix breaker" />
         <div className={`modalFocus ${this.props.modal ? "show" : "hidden"}`}>
           <div className="modalBox">
             <div className="modalClose" onClick={this.props.handleModalClose} />

@@ -1,14 +1,21 @@
 .nav {
   /* position: relative; */
-  display: fixed;
-  /* top: 0; */
-  /* width: 100%; */
+  position: fixed;
+  clear: both;
+  top: 0;
+  width: 100%;
   color: rgb(166, 215, 221, 1);
   font-family: "Raleway", sans-serif;
   display: flex;
   align-items: center;
   z-index: 2;
   background-color: white;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .menuWrap {
@@ -28,6 +35,8 @@
 .navMenuItem {
   display: inline-block;
   width: 33%;
+  max-height: 23.6px;
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -37,6 +46,7 @@
   padding: 0.1em 0em;
   border-radius: 2px;
   width: 95%;
+  letter-spacing: -1.2px;
 }
 
 .navbtn:hover {
@@ -134,4 +144,8 @@
 
 .modal-button:hover {
   background-color: rgba(63, 90, 144, 0.47);
+}
+
+.divWrap {
+  height: 100%;
 }

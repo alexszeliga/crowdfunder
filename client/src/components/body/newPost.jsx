@@ -23,6 +23,15 @@ class NewPost extends Component {
             value={this.props.newPostPostTags}
             placeholder="Tags,Separated,By,Commas"
           />
+          <h2>What Picture Screams "This is it!" (url)</h2>
+          <input
+            className="newPostPostTags"
+            name="newPostPostUrl"
+            onChange={this.props.handleInputChange}
+            value={this.props.newPostPostUrl}
+            placeholder="Tags,Separated,By,Commas"
+          />
+          <br />
           <input
             type="submit"
             name="submit"

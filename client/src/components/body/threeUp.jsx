@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { StyleSheet, css } from "aphrodite";
 // import { fas } from "@fortawesome/free-solid-svg-icons";
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 class ThreeUp extends Component {
   state = {};
   render() {
-    const faSize = this.props.clientWidth > 767 ? "5x" : "3x";
+    // const faSize = this.props.clientWidth > 767 ? "5x" : "3x";
     return (
       <div className={css(styles.threeUp)}>
         {/* <div className={css(styles.block)}>

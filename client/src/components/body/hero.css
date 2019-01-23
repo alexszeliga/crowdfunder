@@ -1,9 +1,10 @@
 .background-image {
     position: relative;
     width: 100%;
-    background-image: url("./sky.jpg");
     z-index: -1 !important;
     background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .hero-headline {

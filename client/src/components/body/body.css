@@ -1,4 +1,12 @@
 .wrapper {
     margin: auto;
+    margin-top: 1em;
     max-width: 960px;
+}
+
+.wrapper::after {
+    content: " " l;
+    width: 500px;
+    height: 500px;
+    background-color: blue;
 }

@@ -1,0 +1,57 @@
+.modalScreen {
+    position: fixed;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    top: 0px;
+    right: 0px;
+    background-color: rgba(255, 255, 255, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.hideModal {
+    display: none;
+}
+
+.modalBox {
+    /* position: absolute; */
+    padding: 2em;
+    min-width: 50px;
+    min-height: 50px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.button {
+    padding: 0.1em 0.5em;
+    margin-top: 1em;
+    border-radius: 2px;
+    border: 1px solid black;
+}
+
+.button:hover {
+    background-color: rgba(63, 90, 144, 0.47);
+}
+
+form input {
+    display: block;
+    min-width: 250px;
+}
+
+form label {}
+
+.modalClose2 {
+    position: absolute;
+    right: 0.2em;
+    top: 0.2em;
+    width: 1em;
+    height: 1em;
+    border: 1px solid black;
+    border-radius: 2px;
+    clear: both;
+}
+
+.modalClose2:hover {
+    background-color: rgba(147, 0, 0, 0.47);
+}

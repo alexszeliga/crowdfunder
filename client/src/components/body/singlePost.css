@@ -1,0 +1,17 @@
+.editButton {
+  position: relative;
+  padding: 0.1em 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px solid black;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.editButton:hover {
+  background-color: rgba(63, 90, 144, 0.47);
+}
+
+.postAdminMenu {
+  position: absolute;
+  right: 1em;
+}

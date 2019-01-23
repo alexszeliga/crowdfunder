@@ -17,17 +17,29 @@ class Body extends Component {
     switch (route) {
       case "/new-post":
         return (
-          <NewPost
-            handleInputChange={this.props.handleInputChange}
-            newPostPostTitle={this.props.newPostPostTitle}
-            newPostPostTags={this.props.newPostPostTags}
-            newPostSubmitPost={this.props.newPostSubmitPost}
-          />
+          <div
+            class="wrapper top-element"
+            style={{ paddingTop: `${this.props.navHeight}px` }}
+          >
+            <NewPost
+              handleInputChange={this.props.handleInputChange}
+              newPostPostTitle={this.props.newPostPostTitle}
+              newPostPostTags={this.props.newPostPostTags}
+              newPostSubmitPost={this.props.newPostSubmitPost}
+            />
+          </div>
         );
       case "/":
         return (
-          <div>
-            <Hero clientWidth={this.props.clientWidth} />
+          <div
+            className="top-element"
+            style={{ paddingTop: `${this.props.navHeight}px` }}
+          >
+            <Hero
+              clientWidth={this.props.clientWidth}
+              headerText="Get Funded!"
+              imgUrl={"./sky.jpg"}
+            />
             <div className="wrapper">
               <ThreeUp clientWidth={this.props.clientWidth} />
               <DisplayPosts
@@ -39,7 +51,10 @@ class Body extends Component {
         );
       case "/user-home":
         return (
-          <div className="wrapper">
+          <div
+            className="wrapper top-element"
+            style={{ paddingTop: `${this.props.navHeight}px` }}
+          >
             <UserHome
               userDataLogged={this.props.userDataLogged}
               userPosts={this.props.userPosts}
@@ -49,19 +64,37 @@ class Body extends Component {
         );
       case "/single-post":
         return (
-          <div>
-            <Hero clientWidth={this.props.clientWidth} />
+          <div
+            className="top-element"
+            style={{ paddingTop: `${this.props.navHeight}px` }}
+          >
+            <Hero
+              clientWidth={this.props.clientWidth}
+              imgUrl={this.props.currentPostData.imgUrl}
+              headerText={this.props.currentPostData.title}
+            />
             <div className="wrapper">
               <SinglePost
+                handleEditPost={this.props.handleEditPost}
+                handlePostBlog={this.props.handlePostBlog}
                 currentPostId={this.props.currentPostId}
                 getSinglePost={this.props.getSinglePost}
                 currentPostData={this.props.currentPostData}
+                currentPostUser={this.props.currentPostUser}
+                userDataLogged={this.props.userDataLogged}
               />
             </div>
           </div>
         );
       default:
-        return <ThreeUp clientWidth={this.props.clientWidth} />;
+        return (
+          <div
+            className="wrapper top-element"
+            style={{ paddingTop: `${this.props.navHeight}px` }}
+          >
+            <ThreeUp clientWidth={this.props.clientWidth} />
+          </div>
+        );
     }
   }
 }
