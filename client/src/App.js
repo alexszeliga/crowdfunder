@@ -306,7 +306,7 @@ class App extends Component {
       updateFields.title = editPostTitle;
     }
 
-    console.log(updateFields);
+    // console.log(updateFields);
     axios
       .post("/api/update-post/" + this.state.currentPostId, updateFields)
       .then(res => {
@@ -323,12 +323,13 @@ class App extends Component {
       .then(res => {
         this.setState({ newBlogBody: "", newBlogSubject: "" });
         this.modalReset();
-        console.log(res);
+        this.getSinglePost(this.state.currentPostId);
+        // console.log(res);
       });
   };
   getBlogPosts = id => {
     axios.get("/api/blog-posts/" + this.state.currentPostId).then(blogs => {
-      console.log(blogs);
+      // console.log(blogs);
     });
   };
   render() {
