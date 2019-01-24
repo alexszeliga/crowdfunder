@@ -11,15 +11,15 @@ class SinglePost extends Component {
   showBlogs = blogArray => {
     if (blogArray) {
       return (
-        <ul>
+        <ul className="blogList">
           {blogArray.map((blog, i) => {
             return (
-              <li>
-                <h3 id={blog._id}>
+              <li className="blogWrapper">
+                <h3 className="blogHeading" id={blog._id}>
                   {blog.subject}
                   <br />
-                  {blog.body}
                 </h3>
+                <p className="blogBody">{blog.body}</p>
               </li>
             );
           })}
@@ -28,9 +28,6 @@ class SinglePost extends Component {
     }
   };
   render() {
-    // console.log(this.props.currentPostData);
-    // console.log(this.props.currentPostUser);
-    console.log(this.props.currentPostData.blogs);
     let editable =
       this.props.currentPostData.user === this.props.userDataLogged._id;
 
@@ -49,7 +46,6 @@ class SinglePost extends Component {
           ""
         )}
         <div>Posting User: {this.props.currentPostUser.username} </div>
-        <div>Posted on: {this.props.currentPostData.createdAt}</div>
         <div>{this.showBlogs(this.props.currentPostData.blogs)}</div>
       </div>
     );

@@ -230,6 +230,16 @@ class App extends Component {
       modalStatus: false
     });
   };
+
+  returnRandomImageUrl = () => {
+    axios
+      .get(`https://source.unsplash.com/collection/573009/1200x500/`)
+      .then(response => {
+        console.log(response.url);
+        return response.url;
+      });
+  };
+
   newPostSubmitPost = e => {
     e.preventDefault();
     axios
@@ -238,7 +248,7 @@ class App extends Component {
         tags: this.state.newPostPostTags.split(",").map(tagWhtSpc => {
           return tagWhtSpc.trim();
         }),
-        imgUrl: this.state.newPostPostUrl,
+        imgUrl: this.returnRandomImageUrl(),
         user: this.state.userDataLogged._id
       })
       .then(response => {

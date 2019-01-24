@@ -35,6 +35,7 @@ class NewPost extends Component {
           <input
             type="submit"
             name="submit"
+            className="theButton"
             onClick={this.props.newPostSubmitPost}
           />
         </form>
