@@ -1,5 +1,5 @@
 const dotenv = require("dotenv").config();
-
+const path = require("path");
 var session = require("express-session");
 
 var passport = require("./config/passport");
@@ -31,7 +31,7 @@ db.once("open", () => console.log("connected to the database"));
 // checks if connection with the database is successful
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.use(express.static("./client/build"));
+app.use(express.static(path.join(__dirname, "client/build")));
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
