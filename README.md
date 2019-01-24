@@ -1,72 +1,35 @@
-# CROWDFUNDER MVP DESCRIBED BY A ROBOT
+# Crowdfunder
 
-## MVP Functions:
+### Crowdfunder is a basic crowdfunding app.
 
-- User can create post
-- User create blog for post
-- User can comment on post
-- User can comment on blog
-- User can vote on post
-- User can vote on blog
-- User can follow post
+It's a MERN stack CRUD app that is a little more than a project starter. It's very much dependant on the happy path.
 
-Crowdfunder has two main routes: shop and post.
+### Current Functions:
 
-Crowdfunder’s MVP search posts, filters posts, create post, create user, log in, log out, like post, follow post, comment post
+As of this moment, Crowdfunder is a CRU app. You can create users, create posts. If you own a post, you can create a blog post. You can update post details, if you own the post.
 
-- Post has one title
-- Post has one creator
-- Post has one description
-- Post has one website
-- Post has many blogs
-- Post has many pictures
-- Post has many comments
-- Post has many likes
-- Post has many follows
+### Nice-to-haves:
 
-- User has one password
-- User has one email address
-- User has one name
-- User has one location
-- User has many posts
-- User has many comments
-- User has many blogs
+The app has Possport.js integrated, and passwords are hashed with BCrypt.
 
-## user interaction meta
+The React interface is integrates a custom body router.
 
-- Comment has one user
-- Comment has one post
+MVC Architechure
 
-- Follow has one user
-- Follow has one post
+## What's next:
 
-- Like has one user
-- Like has one post
+Integrate S3 to allow users to add media to posts.
 
-* Blogs have one title
-* Blogs have one summary
-* Blogs have one body
-* Blogs have one creator
-* Blogs have many comments
+Post and Blog Comments
 
-Shop route shows grid of ‘featured’ items (most likes and follows in the last few days)
+Vote mechanism
 
-Clicking on item opens modal
+Blog Single View
 
-Modal shows post content and CTA to follow / like
+Search two ways: Search within post, search for post by tags
 
-Following a post pops modal to provide email address or use one associated with account
+Set up SMTP Email
 
-For MVP, pledging support is non-monetary; the user who created a post will see special post info, including these two lists separately.
+### Major Refactor:
 
-Post route allows user to create a new campaign. This will be feature poor for now with a push to make much more robust CMS for users in the next release.
-
-The user will be able to create an unlimited number of blogs and provide URLs for as many pics as they’d like; they will be displayed in a carouselle on the post-single display.
-
-### Nav:
-
-- Search
-- How it works
-- Logo
-- Sign in
-- CTA Start a crowdfund
+All inputs need validation, all models need validation, all api routes need error handling, all DB requests need error handling.
