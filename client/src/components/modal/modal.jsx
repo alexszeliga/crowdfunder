@@ -16,7 +16,13 @@ class Modal extends Component {
           />
         );
       case "postBlog":
-        return <PostBlog />;
+        return (
+          <PostBlog
+            currentPostData={this.props.currentPostData}
+            handleInputChange={this.props.handleInputChange}
+            handlePostNewBlog={this.props.handlePostNewBlog}
+          />
+        );
       default:
         return <div>modal404</div>;
     }

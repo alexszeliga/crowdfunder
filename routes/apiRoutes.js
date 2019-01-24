@@ -4,7 +4,6 @@ var passport = require("../config/passport");
 
 module.exports = function(app) {
   app.post("/api/new", (req, res) => {
-    // console.log(req.body);
     db.Post.create(req.body).then(dbPost => {
       return db.User.findByIdAndUpdate(
         req.body.user,
@@ -12,6 +11,23 @@ module.exports = function(app) {
         { new: true }
       ).then(dbUser => {
         res.send(dbUser);
+      });
+    });
+  });
+  app.post("/api/post-blog/:id", function(req, res) {
+    db.Blog.create(req.body).then(function(dbBlog) {
+      db.Post.findByIdAndUpdate(
+        req.params.id,
+        { $push: { blogs: dbBlog._id } },
+        { new: true }
+      ).then(function(dbPost) {
+        db.User.findByIdAndUpdate(
+          dbPost.user,
+          { $push: { blogs: dbBlog._id } },
+          { new: true }
+        ).then(function(dbUser) {
+          res.send({ blog: dbBlog, user: dbUser, post: dbPost });
+        });
       });
     });
   });
@@ -83,11 +99,13 @@ module.exports = function(app) {
   });
   app.get("/api/single-post/:postId", function(req, res) {
     // console.log(req.params.postId);
-    db.Post.findById(req.params.postId).then(postResponse => {
-      // console.log(postResponse);
+    db.Post.findById(req.params.postId)
+      .populate("blogs")
+      .then(postResponse => {
+        console.log(postResponse);
 
-      res.send(postResponse);
-    });
+        res.send(postResponse);
+      });
   });
 
   // app.get("*", (req, res) => {

@@ -16,7 +16,13 @@ const postSchema = new Schema(
     },
     imgUrl: {
       type: String
-    }
+    },
+    blogs: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Blog"
+      }
+    ]
   },
   { timestamps: true }
 );

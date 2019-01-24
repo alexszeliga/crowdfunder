@@ -75,6 +75,8 @@ class Body extends Component {
             />
             <div className="wrapper">
               <SinglePost
+                wipeCurrentPost={this.props.wipeCurrentPost}
+                getBlogPosts={this.props.getBlogPosts}
                 handleEditPost={this.props.handleEditPost}
                 handlePostBlog={this.props.handlePostBlog}
                 currentPostId={this.props.currentPostId}

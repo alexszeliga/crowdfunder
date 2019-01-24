@@ -50,7 +50,9 @@ class App extends Component {
     modalStatus: false,
     editPostTags: "",
     editPostTitle: "",
-    editPostImgUrl: ""
+    editPostImgUrl: "",
+    newBlogBody: "",
+    newBlogSubject: ""
   };
 
   checkAuth = () => {
@@ -202,6 +204,13 @@ class App extends Component {
         break;
     }
   };
+  wipeCurrentPost = () => {
+    this.setState({
+      currentPostData: [],
+      currentPostUser: "",
+      currentPostId: ""
+    });
+  };
   handleModalClose = () => {
     this.setState({
       modal: false,
@@ -295,6 +304,23 @@ class App extends Component {
         this.modalReset();
       });
   };
+  handlePostNewBlog = () => {
+    axios
+      .post("/api/post-blog/" + this.state.currentPostId, {
+        subject: this.state.newBlogSubject,
+        body: this.state.newBlogBody
+      })
+      .then(res => {
+        this.setState({ newBlogBody: "", newBlogSubject: "" });
+        this.modalReset();
+        console.log(res);
+      });
+  };
+  getBlogPosts = id => {
+    axios.get("/api/blog-posts/" + this.state.currentPostId).then(blogs => {
+      console.log(blogs);
+    });
+  };
   render() {
     return (
       <div>
@@ -330,8 +356,11 @@ class App extends Component {
           currentPostData={this.state.currentPostData}
           handleUpdatePost={this.handleUpdatePost}
           handleInputChange={this.handleInputChange}
+          handlePostNewBlog={this.handlePostNewBlog}
         />
         <Body
+          wipeCurrentPost={this.wipeCurrentPost}
+          getBlogPosts={this.getBlogPosts}
           handleEditPost={this.handleEditPost}
           handlePostBlog={this.handlePostBlog}
           navHeight={this.state.navHeight}
