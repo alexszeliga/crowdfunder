@@ -55,13 +55,13 @@ module.exports = function(app) {
       res.send(userData);
     });
   });
-  app.get("/api/all-posts", function(req, res) {
-    db.Post.find()
-      .populate("users")
-      .exec(function(err, allPosts) {
-        res.send(allPosts);
-      });
-  });
+  // app.get("/api/all-posts", function(req, res) {
+  //   db.Post.find()
+  //     .populate("users")
+  //     .exec(function(err, allPosts) {
+  //       res.send(allPosts);
+  //     });
+  // });
   app.post("/api/user", function(req, res) {
     db.User.create(req.body)
       .then(function(userAddResponse) {
